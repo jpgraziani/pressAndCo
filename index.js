@@ -21,23 +21,29 @@ function formatParams(params) {
   return paramItems.join('&');
 }
 
-function testParms() {
-  const myparam = {
-    name: 'olivia',
-    age: 13
-  }
-  let test = formatParams(myparam);
-  console.log(test)
-
-}
-testParms()
-
 /*****************************************/
 /* NEWSWIRE API DATA */
 /*****************************************/
+//fetch real-time sections
+function createNewsWireUrl() {
+  const params = {
+    ['api-key']: API_KEY
+  };
+  //format key
+  const apiKey = formatParams(params);
+  //get value from option select on form
+  const userSelect = $('select option:selected').text();
+  //create url 
+  const url = `${newsWireURL}${userSelect}?${apiKey}`;
+  
+  return fetchNewsWireData(url);
+}
 
-
-
+function fetchNewsWireData(url) {
+  fetch(url)
+  .then(res => res.json())
+  .then(data => console.log(data))
+}
 
 
 /*****************************************/
@@ -58,7 +64,10 @@ function handleSearchArticlesBtn() {
 
 //handle for sections
 function handleSectionsSubBtn() {
-
+  $('main').on('submit', '#js-newsWire-form', event => {
+    event.preventDefault();
+    createNewsWireUrl()
+  });
 }
 
 //handle clear search results
@@ -71,7 +80,9 @@ function handleClearSearch() {
 /*****************************************/
 //CREATE FUNCTION THAT HOLDS ALL LOAD FUNCTIONS
 function initializeApp() {
-
+  handleSearchArticlesBtn()
+  handleSectionsSubBtn()
+  handleClearSearch()
 }
 
 $(initializeApp)
