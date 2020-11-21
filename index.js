@@ -14,10 +14,23 @@ const searchURL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json';
 /*****************************************/
 /* GLOBAL PARAMS */
 /*****************************************/
+function formatParams(params) {
+  const paramItems = Object.keys(params).map(key => 
+    `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+    );
+  return paramItems.join('&');
+}
 
+function testParms() {
+  const myparam = {
+    name: 'olivia',
+    age: 13
+  }
+  let test = formatParams(myparam);
+  console.log(test)
 
-
-
+}
+testParms()
 
 /*****************************************/
 /* NEWSWIRE API DATA */
