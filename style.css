@@ -1,0 +1,45 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.hidden {
+  display: none;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 1fr 50px;
+  grid-template-areas: 
+    "header"
+    "main-wrapper"
+    "footer";
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.main-wrapper {
+  grid-area: main-wrapper;
+  /* background-color: #daf2f4; */
+}
+
+#js-real-time-results, #js-deep-search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+  grid-auto-rows: auto;
+  grid-gap: 1.5rem;
+  margin: 1.5rem;
+}
+
+.overview-card {
+  border: 2px solid black;
+}

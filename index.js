@@ -57,7 +57,10 @@ function fetchNewsWireData(url) {
 
 /***** display data on DOM *****/
 function displayNewsWireDOM(getJson) {
+  //removes previous results
+  $('#js-real-time-results').empty();
   let data = getJson.results;
+  
   console.log(data)
   data.map(article => {
     if (article.abstract.length >= 1 &&
@@ -73,6 +76,8 @@ function displayNewsWireDOM(getJson) {
           `);
         }
   })
+  //displays section
+  $('#js-real-time').removeClass('hidden');
 }
 
 /*****************************************/
