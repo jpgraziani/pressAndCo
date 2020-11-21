@@ -7,7 +7,36 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  
+  <header>
+    <h1>Press&Co</h1>
+  </header>
+  <div class="grid-container">
+    <main id="js-main" class="main-wrapper">
+      <form id="js-newsWire-form">
+        <label>discover real-time articles</label>
+        <select id="js-sections" class="sections" name="sections">
+          option value="arts">arts</option>
+						<option value="books">books</option>
+						<option value="business">business</option>
+						<option value="food">food</option>
+						<option value="health">health</option>
+						<option value="new york">new york</option>
+						<option value="parenting">parenting</option>
+						<option value="science">science</option>
+						<option value="technology">technology</option>
+						<option value="world">world</option>
+        </select>
+        <input type="submit" id="newsWireBtn" value="run with it">
+      </form>
+
+      <p id="js-error-message"></p>
+      <div id="js-real-time-results"></div>
+      <div id="js-deep-search-results"></div>
+    </main>
+    <footer id="js-footer">
+
+    </footer>
+  </div>
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
   <script type='text/javascript' src='config.js'></script>
   <script src="./index.js"></script>
