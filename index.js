@@ -50,10 +50,15 @@ function handleSectionsSubBtn() {
 
 //handle clear search results
 function handleClearSearch() {
-  
+
 }
 
 /*****************************************/
 /* LOAD THESE ITEMS WHEN APP PAGE LOADS */
 /*****************************************/
 //CREATE FUNCTION THAT HOLDS ALL LOAD FUNCTIONS
+function initializeApp() {
+
+}
+
+$(initializeApp)
