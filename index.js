@@ -40,10 +40,18 @@ function createNewsWireUrl() {
 }
 
 function fetchNewsWireData(url) {
-  fetch(url)
-  .then(res => res.json())
-  .then(data => console.log(data))
-}
+    fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+    .then(results => console.log(results))
+    .catch(err => {
+      $('js-error-message').text('oops something went wrong:', err)
+    });
+  }
 
 
 /*****************************************/
