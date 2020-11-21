@@ -24,7 +24,8 @@ function formatParams(params) {
 /*****************************************/
 /* NEWSWIRE API DATA */
 /*****************************************/
-//fetch real-time sections
+
+/***** create news url *****/
 function createNewsWireUrl() {
   const params = {
     ['api-key']: API_KEY
@@ -39,6 +40,7 @@ function createNewsWireUrl() {
   return fetchNewsWireData(url);
 }
 
+/***** fetch real-time sections *****/
 function fetchNewsWireData(url) {
     fetch(url)
     .then(response => {
@@ -47,12 +49,28 @@ function fetchNewsWireData(url) {
       }
       throw new Error(response.statusText);
     })
-    .then(results => console.log(results))
+    .then(getJson => displayNewsWireDOM(getJson))
     .catch(err => {
       $('js-error-message').text('oops something went wrong:', err)
     });
   }
 
+/***** display data on DOM *****/
+function displayNewsWireDOM(getJson) {
+  let data = getJson.results;
+  console.log(data)
+  data.map(article => {
+    $('main').find('#js-real-time-results').append(`
+      <article class="overview-card">
+        <h3>${article.title}</h3>
+        <p>${article.byline}</p>
+        <div>
+          <p>${article.abstract}</p>
+        </div>
+      </article>
+    `);
+  })
+}
 
 /*****************************************/
 /* SEARCH ARTICLES API */
@@ -74,7 +92,7 @@ function handleSearchArticlesBtn() {
 function handleSectionsSubBtn() {
   $('main').on('submit', '#js-newsWire-form', event => {
     event.preventDefault();
-    createNewsWireUrl()
+    createNewsWireUrl();
   });
 }
 
