@@ -60,15 +60,18 @@ function displayNewsWireDOM(getJson) {
   let data = getJson.results;
   console.log(data)
   data.map(article => {
-    $('main').find('#js-real-time-results').append(`
-      <article class="overview-card">
-        <h3>${article.title}</h3>
-        <p>${article.byline}</p>
-        <div>
-          <p>${article.abstract}</p>
-        </div>
-      </article>
-    `);
+    if (article.abstract.length >= 1 &&
+        article.byline.length >= 1) {
+          $('main').find('#js-real-time-results').append(`
+            <article class="overview-card">
+              <h3>${article.title}</h3>
+              <p>${article.byline}</p>
+              <div>
+                <p>${article.abstract}</p>
+              </div>
+            </article>
+          `);
+        }
   })
 }
 
