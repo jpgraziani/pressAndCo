@@ -49,41 +49,55 @@ function fetchNewsWireData(url) {
       }
       throw new Error(response.statusText);
     })
-    .then(getJson => displayNewsWireDOM(getJson))
+    .then(getJson => {
+      displayNewsWireDOM(getJson);
+      // keyWords(getJson);
+    })
     .catch(err => {
       $('js-error-message').text('oops something went wrong:', err)
     });
   }
 
 /***** display data on DOM *****/
+
 function displayNewsWireDOM(getJson) {
   //removes previous results
   $('#js-real-time-results').empty();
   let data = getJson.results;
-  
   console.log(data)
   data.map(article => {
-    if (article.abstract.length >= 1 &&
-        article.byline.length >= 1) {
+      if (article.abstract.length >= 1 &&
+        article.byline.length >= 1 &&
+        article.des_facet.length >= 2) {
           $('main').find('#js-real-time-results').append(`
             <article class="overview-card">
-              <h3>${article.title}</h3>
+              <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
               <p>${article.byline}</p>
+              <p>${article.abstract}</p>
+              <p>published: ${article.published_date}</p>
               <div>
-                <p>${article.abstract}</p>
+                <hr>
+                <p>discover more articles ${article.byline.toLowerCase()}
+                <button id="js-nameSearch" name="js-nameSearch" value="${article.byline}">locate stories</button></p>
+              </div>
+              <div>
+              <p>search key terms:</p>
+              <input type="button" value="${article.des_facet[0]}">
+              <input type="button" value="${article.des_facet[1]}">
               </div>
             </article>
           `);
         }
   })
+  
   //displays section
   $('#js-real-time').removeClass('hidden');
 }
 
+
 /*****************************************/
 /* SEARCH ARTICLES API */
 /*****************************************/
-
 
 
 
