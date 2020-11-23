@@ -91,7 +91,6 @@ function displayNewsWireDOM(getJson) {
   $('#js-real-time').removeClass('hidden');
 }
 
-
 /*****************************************/
 /* SEARCH ARTICLES API */
 /*****************************************/
@@ -127,11 +126,14 @@ function displaySearchArticleDOM(getJson) {
   let data = getJson.response.docs;
   console.log('hehehe', data)
   $('#js-real-time-results').empty();
+  $('#js-real-time').addClass('hidden');
 
   data.map(article => {
     $('main').find('#js-deep-search-results').append(`
       <article class="overview-card">
-        <h3>${article.abstract}</h3>
+        <h3><a href="${article.web_url}" target="_blank">${article.headline.main}</a></h3>
+        <p>${article.abstract}</p>
+        <p>${article.byline.original}</p>
       </article>
     `);
   })
@@ -139,10 +141,6 @@ function displaySearchArticleDOM(getJson) {
   $('#js-deep-search').removeClass('hidden');
 }
 
-// $('#realTime-search-results').remove();
-  // $('#js-real-time-results').empty();
-  // $('#js-real-time-results').addClass('hidden');
-  // $('#js-deep-search-results').removeClass('hidden');
 
 /*****************************************/
 /* EVENT HANDLES */
@@ -175,6 +173,7 @@ function handleClearSearch() {
 /*****************************************/
 //CREATE FUNCTION THAT HOLDS ALL LOAD FUNCTIONS
 function initializeApp() {
+  
   handleSearchArticlesBtn()
   handleSectionsSubBtn()
   handleClearSearch()
