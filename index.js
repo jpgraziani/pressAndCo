@@ -124,22 +124,25 @@ console.log(url)
 }
 
 function displaySearchArticleDOM(getJson) {
-  // $('#realTime-search-results').remove();
-  // $('#js-real-time-results').empty();
-  // $('#js-real-time-results').addClass('hidden');
-  // $('#js-deep-search-results').removeClass('hidden');
   let data = getJson.response.docs;
   console.log('hehehe', data)
+  $('#js-real-time-results').empty();
 
   data.map(article => {
     $('main').find('#js-deep-search-results').append(`
-      <article class="overview-card>
-        <h3>${article.headline.print_headline}</h3>
+      <article class="overview-card">
+        <h3>${article.abstract}</h3>
       </article>
     `);
   })
+  
+  $('#js-deep-search').removeClass('hidden');
 }
 
+// $('#realTime-search-results').remove();
+  // $('#js-real-time-results').empty();
+  // $('#js-real-time-results').addClass('hidden');
+  // $('#js-deep-search-results').removeClass('hidden');
 
 /*****************************************/
 /* EVENT HANDLES */
@@ -162,7 +165,9 @@ function handleSectionsSubBtn() {
 
 //handle clear search results
 function handleClearSearch() {
-
+  $('main').on('click', '#reload', function() {
+    window.location.reload();
+  });
 }
 
 /*****************************************/
