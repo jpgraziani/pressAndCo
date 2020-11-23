@@ -49,12 +49,9 @@ function fetchNewsWireData(url) {
       }
       throw new Error(response.statusText);
     })
-    .then(getJson => {
-      displayNewsWireDOM(getJson);
-      // keyWords(getJson);
-    })
+    .then(getJson => displayNewsWireDOM(getJson))
     .catch(err => {
-      $('js-error-message').text('oops something went wrong:', err)
+      $('#js-error-message').text('oops something went wrong:', err)
     });
   }
 
@@ -82,8 +79,8 @@ function displayNewsWireDOM(getJson) {
               </div>
               <div>
               <p>search key terms:</p>
-              <input type="button" value="${article.des_facet[0]}">
-              <input type="button" value="${article.des_facet[1]}">
+              <input type="button" id="js-nameSearch" value="${article.des_facet[0]}">
+              <input type="button" id="js-nameSearch" value="${article.des_facet[1]}">
               </div>
             </article>
           `);
@@ -99,7 +96,49 @@ function displayNewsWireDOM(getJson) {
 /* SEARCH ARTICLES API */
 /*****************************************/
 
+function createSearchArticlesUrl(query) {
+  const params = {
+    q: query,
+    ['api-key']: API_KEY
+  }
 
+  const searchParams = formatParams(params)
+  const url = `${searchURL}?${searchParams}`
+
+  return fetchSearchArticleData(url);
+}
+
+function fetchSearchArticleData(url) {
+console.log(url)
+  fetch(url)
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error(response.statusText)
+  })
+  .then(getJson => displaySearchArticleDOM(getJson))
+  .catch(err => {
+    $('#js-error-message').text('opps something went wrong:', err)
+  })
+}
+
+function displaySearchArticleDOM(getJson) {
+  // $('#realTime-search-results').remove();
+  // $('#js-real-time-results').empty();
+  // $('#js-real-time-results').addClass('hidden');
+  // $('#js-deep-search-results').removeClass('hidden');
+  let data = getJson.response.docs;
+  console.log('hehehe', data)
+
+  data.map(article => {
+    $('main').find('#js-deep-search-results').append(`
+      <article class="overview-card>
+        <h3>${article.headline.print_headline}</h3>
+      </article>
+    `);
+  })
+}
 
 
 /*****************************************/
@@ -107,7 +146,10 @@ function displayNewsWireDOM(getJson) {
 /*****************************************/
 //handle for deep search
 function handleSearchArticlesBtn() {
-
+  $('main').on('click', '#js-nameSearch', function() {
+    let authorSelect = $(this).val()
+    createSearchArticlesUrl(authorSelect)
+  })
 }
 
 //handle for sections
