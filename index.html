@@ -4,32 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Press&Co</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <header>
-    <h1>Press&Co</h1>
-  </header>
   <div class="grid-container">
-    <main id="js-main" class="main-wrapper">
-      <form id="js-newsWire-form">
-        <label>discover real-time articles</label>
-        <select id="js-sections" class="sections" name="sections">
-          <option value="arts">arts</option>
-          <option value="books">books</option>
-          <option value="business">business</option>
-          <option value="food">food</option>
-          <option value="health">health</option>
-          <option value="new york">new york</option>
-          <option value="parenting">parenting</option>
-          <option value="science">science</option>
-          <option value="technology">technology</option>
-          <option value="world">world</option>
-        </select>
-        <input type="submit" id="newsWireBtn" value="run with it">
-        <input type="button" id="reload" value="clear results">
-      </form>
-      
+    <header class="active-header">
+      <div id="header-items">
+        <div id="js-brand">
+          <div>
+            <img src="./circle-press.svg" class="logo">
+          </div>
+          <h1>Press&Co</h1>
+        </div>
+      <div>
+        <form id="js-newsWire-form">
+          <div class="selectdiv">
+          <label for="sections">discover real-time articles</label>
+            <select id="js-sections" class="sections" name="sections">
+              <option value="arts">arts</option>
+              <option value="business">business</option>
+              <option value="food">food</option>
+              <option value="health">health</option>
+              <option value="new york">new york</option>
+              <option value="parenting">parenting</option>
+              <option value="science">science</option>
+              <option value="world">world</option>
+            </select>
+          </div>
+          <div class="inputBtns">
+            <input type="submit" id="newsWireBtn" value="run with it">
+            <input type="button" id="reload" value="clear results">
+          </div>
+        </form>
+      </div>  
+    </div>
+    </header>  
+    <main id="js-main" class="main-wrapper main-active">
       <p id="js-error-message"></p>
       <section id="js-real-time" class="hidden">
         <h2>real-time articles</h2>
@@ -41,7 +52,7 @@
       </section>
     </main>
     <footer id="js-footer" class="footer">
- 
+      
     </footer>
   </div>
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>

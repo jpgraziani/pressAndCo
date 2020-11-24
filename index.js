@@ -69,18 +69,20 @@ function displayNewsWireDOM(getJson) {
           $('main').find('#js-real-time-results').append(`
             <article class="overview-card">
               <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-              <p>${article.byline}</p>
-              <p>${article.abstract}</p>
-              <p>published: ${article.published_date}</p>
-              <div>
-                <hr>
-                <p>discover more articles ${article.byline.toLowerCase()}
-                <button id="js-nameSearch" name="js-nameSearch" value="${article.byline}">locate stories</button></p>
+              <div class="abstract">
+                <p class="byline">${article.byline}</p>
+                <p>${article.abstract}</p>
+              <div><br>
+              <hr>
+              <div class="discoverAuthor">
+                <p>discover more articles ${article.byline.toLowerCase()}</p>
+                <button id="js-nameSearch" name="js-nameSearch" value="${article.byline}">
+                locate stories</button>
               </div>
-              <div>
-              <p>search key terms:</p>
-              <input type="button" id="js-nameSearch" value="${article.des_facet[0]}">
-              <input type="button" id="js-nameSearch" value="${article.des_facet[1]}">
+                <div class="searchTerms">
+                <p>search key terms:</p>
+                <input type="button" id="js-nameSearch" value="${article.des_facet[0]}"><br>
+                <input type="button" id="js-nameSearch" value="${article.des_facet[1]}">
               </div>
             </article>
           `);
@@ -89,6 +91,9 @@ function displayNewsWireDOM(getJson) {
   
   //displays section
   $('#js-real-time').removeClass('hidden');
+  $('header').removeClass('active-header');
+  $('header').addClass('non-active-header');
+  $('#js-brand').addClass('brand-active');
 }
 
 /*****************************************/
@@ -147,23 +152,25 @@ function displaySearchArticleDOM(getJson) {
 /*****************************************/
 //handle for deep search
 function handleSearchArticlesBtn() {
-  $('main').on('click', '#js-nameSearch', function() {
-    let authorSelect = $(this).val()
-    createSearchArticlesUrl(authorSelect)
+  $('#js-main').on('click', '#js-nameSearch', function() {
+    let authorSelect = $(this).val();
+    console.log(authorSelect)
+    createSearchArticlesUrl(authorSelect);
   })
 }
 
 //handle for sections
 function handleSectionsSubBtn() {
-  $('main').on('submit', '#js-newsWire-form', event => {
+  $('header').on('submit', '#js-newsWire-form', event => {
     event.preventDefault();
     createNewsWireUrl();
+    console.log('fire')
   });
 }
 
 //handle clear search results
 function handleClearSearch() {
-  $('main').on('click', '#reload', function() {
+  $('header').on('click', '#reload', function() {
     window.location.reload();
   });
 }
@@ -173,7 +180,6 @@ function handleClearSearch() {
 /*****************************************/
 //CREATE FUNCTION THAT HOLDS ALL LOAD FUNCTIONS
 function initializeApp() {
-  
   handleSearchArticlesBtn()
   handleSectionsSubBtn()
   handleClearSearch()
