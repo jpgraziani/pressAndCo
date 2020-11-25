@@ -10,6 +10,7 @@ body {
   padding: 0;
   font-family: sans-serif;
   background: #FFDE03;
+  height: 100vh;
 }
 
 /*********************************/
@@ -98,8 +99,6 @@ p {
     "header"
     "main-wrapper"
     "footer";
-  height: 100vh;
-  margin: 0 auto;
 }
 
 
@@ -232,7 +231,6 @@ header {
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin: 0 auto;
 } 
 
 header {
@@ -270,7 +268,3 @@ header {
 .non-active-header img {
   width: 50px;
 }
-
-/*********************************/
-/* FOOTER */
-/*********************************/

@@ -70,7 +70,7 @@ function displayNewsWireDOM(getJson) {
   console.log(data)
   data.map(article => {
       if (article.abstract.length >= 1 &&
-        article.byline.length >= 1 &&
+        article.byline.length >= 3 &&
         article.des_facet.length >= 2) {
           $('main').find('#js-real-time-results').append(`
             <article class="overview-card">
@@ -141,7 +141,7 @@ function displaySearchArticleDOM(getJson) {
   $('#js-real-time').addClass('hidden');
 
   data.map(article => {
-    $('main').find('#js-deep-search-results').append(`
+        $('main').find('#js-deep-search-results').append(`
       <article class="overview-card">
         <h3><a href="${article.web_url}" target="_blank">${article.headline.main}</a></h3>
         <div class="abstract">
