@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Press&Co</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css" />
+
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -22,11 +22,8 @@
           <div class="selectdiv">
           <label for="sections">discover real-time articles</label>
             <select id="js-sections" class="sections" name="sections">
-              <option value="arts">arts</option>
-              <option value="business">business</option>
               <option value="food">food</option>
               <option value="health">health</option>
-              <option value="new york">new york</option>
               <option value="parenting">parenting</option>
               <option value="science">science</option>
               <option value="world">world</option>
@@ -42,14 +39,14 @@
     </header>  
     <main id="js-main" class="main-wrapper main-active">
       <p id="js-error-message"></p>
-      <section id="js-real-time" class="hidden">
+      <div id="js-real-time" class="hidden">
         <h2>real-time articles</h2>
         <div id="js-real-time-results"></div>
-      </section>
-      <section id="js-deep-search" class="hidden">
+      </div>
+      <div id="js-deep-search" class="hidden">
         <h2>search results</h2>
         <div id="js-deep-search-results"></div>
-      </section>
+      </div>
     </main>
     <footer id="js-footer" class="footer">
       

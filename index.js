@@ -21,6 +21,11 @@ function formatParams(params) {
   return paramItems.join('&');
 }
 
+function sectionParams(section) {
+  const sectionItems = `${encodeURIComponent(section)}`
+  return sectionItems;
+}
+
 /*****************************************/
 /* NEWSWIRE API DATA */
 /*****************************************/
@@ -34,9 +39,10 @@ function createNewsWireUrl() {
   const apiKey = formatParams(params);
   //get value from option select on form
   const userSelect = $('select option:selected').text();
+  const formatSelect = sectionParams(userSelect)
   //create url 
-  const url = `${newsWireURL}${userSelect}?${apiKey}`;
-  
+  const url = `${newsWireURL}${formatSelect}.json?${apiKey}`;
+  console.log(url)
   return fetchNewsWireData(url);
 }
 
@@ -51,7 +57,7 @@ function fetchNewsWireData(url) {
     })
     .then(getJson => displayNewsWireDOM(getJson))
     .catch(err => {
-      $('#js-error-message').text('oops something went wrong:', err)
+      $('#js-error-message').text('oops something went wrong...', err)
     });
   }
 
@@ -77,8 +83,9 @@ function displayNewsWireDOM(getJson) {
               <div class="discoverAuthor">
                 <p>discover more articles ${article.byline.toLowerCase()}</p>
                 <button id="js-nameSearch" name="js-nameSearch" value="${article.byline}">
-                locate stories</button>
+                locate articles</button>
               </div>
+              <hr>
                 <div class="searchTerms">
                 <p>search key terms:</p>
                 <input type="button" id="js-nameSearch" value="${article.des_facet[0]}"><br>
@@ -123,7 +130,7 @@ console.log(url)
   })
   .then(getJson => displaySearchArticleDOM(getJson))
   .catch(err => {
-    $('#js-error-message').text('opps something went wrong:', err)
+    $('#js-error-message').text('opps something went wrong...', err)
   })
 }
 
@@ -137,15 +144,16 @@ function displaySearchArticleDOM(getJson) {
     $('main').find('#js-deep-search-results').append(`
       <article class="overview-card">
         <h3><a href="${article.web_url}" target="_blank">${article.headline.main}</a></h3>
-        <p>${article.abstract}</p>
-        <p>${article.byline.original}</p>
+        <div class="abstract">
+          <p class="byline">${article.byline.original}</p>
+          <p>${article.abstract}</p>
+        </div>
       </article>
     `);
   })
   
   $('#js-deep-search').removeClass('hidden');
 }
-
 
 /*****************************************/
 /* EVENT HANDLES */
@@ -164,7 +172,7 @@ function handleSectionsSubBtn() {
   $('header').on('submit', '#js-newsWire-form', event => {
     event.preventDefault();
     createNewsWireUrl();
-    console.log('fire')
+    // console.log('fire')
   });
 }
 
