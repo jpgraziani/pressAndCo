@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Press&Co</title>
-
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -18,6 +17,7 @@
           <h1>Press&Co</h1>
         </div>
       <div>
+        <!-- FORM -->
         <form id="js-newsWire-form">
           <div class="selectdiv">
           <label for="js-sections">discover real-time articles</label>
@@ -37,16 +37,17 @@
       </div>  
     </div>
     </header>  
+    <!-- CONTENT WILL BE DISPLAYED -->
     <main id="js-main" class="main-wrapper main-active">
-      <p id="js-error-message"></p>
-      <div id="js-real-time" class="hidden">
+      <p id="js-error-message" class="hidden"></p>
+      <section id="js-real-time" class="hidden">
         <h2>real-time articles</h2>
         <div id="js-real-time-results"></div>
-      </div>
-      <div id="js-deep-search" class="hidden">
+      </section>
+      <section id="js-deep-search" class="hidden">
         <h2>search results</h2>
         <div id="js-deep-search-results"></div>
-      </div>
+      </section>
     </main>
   </div>
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>

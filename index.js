@@ -42,7 +42,7 @@ function createNewsWireUrl() {
   const formatSelect = sectionParams(userSelect)
   //create url 
   const url = `${newsWireURL}${formatSelect}.json?${apiKey}`;
-  console.log(url)
+  
   return fetchNewsWireData(url);
 }
 
@@ -67,14 +67,17 @@ function displayNewsWireDOM(getJson) {
   //removes previous results
   $('#js-real-time-results').empty();
   let data = getJson.results;
-  console.log(data)
   data.map(article => {
-      if (article.abstract.length >= 1 &&
-        article.byline.length >= 3 &&
-        article.des_facet.length >= 2) {
+      if (article.abstract.length >= 1 
+        && article.byline.length >= 3 
+        && article.des_facet.length >= 2) {
           $('main').find('#js-real-time-results').append(`
             <article class="overview-card">
-              <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+              <h3>
+                <a href="${article.url}" target="_blank">
+                  ${article.title}
+                </a>
+              </h3>
               <div class="abstract">
                 <p class="byline">${article.byline}</p>
                 <p>${article.abstract}</p>
@@ -83,7 +86,8 @@ function displayNewsWireDOM(getJson) {
               <div class="discoverAuthor">
                 <p>discover more articles ${article.byline.toLowerCase()}</p>
                 <button id="js-nameSearch" name="js-nameSearch" value="${article.byline}">
-                locate articles</button>
+                locate articles
+                </button>
               </div>
               <hr>
                 <div class="searchTerms">
@@ -136,14 +140,17 @@ console.log(url)
 
 function displaySearchArticleDOM(getJson) {
   let data = getJson.response.docs;
-  console.log('hehehe', data)
   $('#js-real-time-results').empty();
   $('#js-real-time').addClass('hidden');
 
   data.map(article => {
-        $('main').find('#js-deep-search-results').append(`
+    $('main').find('#js-deep-search-results').append(`
       <article class="overview-card">
-        <h3><a href="${article.web_url}" target="_blank">${article.headline.main}</a></h3>
+        <h3>
+          <a href="${article.web_url}" target="_blank">
+            ${article.headline.main}
+          </a>
+        </h3>
         <div class="abstract">
           <p class="byline">${article.byline.original}</p>
           <p>${article.abstract}</p>
@@ -162,7 +169,6 @@ function displaySearchArticleDOM(getJson) {
 function handleSearchArticlesBtn() {
   $('#js-main').on('click', '#js-nameSearch', function() {
     let authorSelect = $(this).val();
-    console.log(authorSelect)
     createSearchArticlesUrl(authorSelect);
   })
 }
@@ -172,7 +178,6 @@ function handleSectionsSubBtn() {
   $('header').on('submit', '#js-newsWire-form', event => {
     event.preventDefault();
     createNewsWireUrl();
-    // console.log('fire')
   });
 }
 
