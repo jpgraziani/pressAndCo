@@ -1,5 +1,5 @@
 # Press&Co
-This App will help users access real-time news articles and based on specific filters the user can preform a more specific broad search. 
+Discover real-time articles.
 
 
 # Live Site
@@ -14,9 +14,22 @@ https://github.com/jpgraziani/pressAndCo
 
 # ScreenShots
 welcome screen:
-file:///Users/jonathangraziani/Desktop/gitHub/projects/pressAndCo/readMeImg/press&co_views.jpg
+![readMeImg](press&co_views.jpg)
 
+Pick a Section:
+![readMeImg](press&co_views2.jpg)
 
+Filter your sections further by:
+* author 
+* key words
+
+![readMeImg](press&co_views3.jpg)
+
+Further in-depth search:
+![readMeImg](press&co_views4.jpg)
+
+# Summary
+This App will help users access real-time news articles, and based on specific filters; the user can perform a more specific broad search. The user can first select which overarching section they would like to start with. Next, they can view articles or create a more in-depth broad search by click on more articles from the author or keywords. 
 
 # Built With
 * HTML5
