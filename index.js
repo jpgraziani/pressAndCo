@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const API_KEY = config.API_KEY;
 
@@ -6,24 +6,74 @@ const API_KEY = config.API_KEY;
 /* NEWYORK TIMES API URLS */
 /*****************************************/
 
-const newsWireURL = 'https://api.nytimes.com/svc/news/v3/content/all/';
+const newsWireURL = "https://api.nytimes.com/svc/news/v3/content/all/";
 
-const searchURL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json';
-
+const searchURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 
 /*****************************************/
 /* GLOBAL PARAMS */
 /*****************************************/
 function formatParams(params) {
-  const paramItems = Object.keys(params).map(key => 
-    `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
-    );
-  return paramItems.join('&');
+  console.log(params,"<---")
+  const paramItems = Object.keys(params).map(
+    (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+  );
+  return paramItems.join("&");
 }
 
 function sectionParams(section) {
-  const sectionItems = `${encodeURIComponent(section)}`
+  const sectionItems = `${encodeURIComponent(section)}`;
   return sectionItems;
+}
+
+/* ************************************** */
+/* ====================================== */
+//             POPULATE MENU              //
+/* ====================================== */
+/* ************************************** */
+/*  So, no all of section's array elements work. These are from the Top-Stories Section.
+    The wire stories might have a slightly different set of values.
+    I rewote the fetch chains...I don't know if you need the throw 
+    statment along with the catch. I've seen it written like that
+    (I've even written it like that) but I don't know it's necessary.
+    Also, in the createNewsWireUrl method, I called .val() instead of .text(). Iirc,
+    .text is going to pull your innerHtml rather than the value.
+    I also updated the html to reflect the changes in the js file.
+    And I added cursor style to the buttons*/
+
+const sections = [
+  { linkName: "arts", displayName: "Arts" },
+  { linkName: "automobiles", displayName: "Automobiles" },
+  { linkName: "books", displayName: "Books" },
+  { linkName: "business", displayName: "Business" },
+  { linkName: "fashion", displayName: "Fashion" },
+  { linkName: "food", displayName: "Food" },
+  { linkName: "health", displayName: "Health" },
+  { linkName: "home", displayName: "Home" },
+  { linkName: "insider", displayName: "Times Insider" },
+  { linkName: "magazine", displayName: "Magazine" },
+  { linkName: "movies", displayName: "Movies" },
+  { linkName: "nyregion", displayName: "NY Region" },
+  { linkName: "obituaries", displayName: "Obituaries" },
+  { linkName: "opinion", displayName: "Opinion" },
+  { linkName: "politics", displayName: "Politics" },
+  { linkName: "realestate", displayName: "Real Estate" },
+  { linkName: "science", displayName: "Science" },
+  { linkName: "sports", displayName: "Sports" },
+  { linkName: "sundayreview", displayName: "Sunday Review" },
+  { linkName: "technology", displayName: "Technology" },
+  { linkName: "theater", displayName: "Theater" },
+  { linkName: "t-magazine", displayName: "T-Magazine" },
+  { linkName: "travel", displayName: "Travel" },
+  { linkName: "upshot", displayName: "Upshot" },
+  { linkName: "us", displayName: "U.S." },
+  { linkName: "world", displayName: "World" },
+];
+
+function populateMenu() {
+  sections.map((section) => {
+    $("#js-sections").append(`<option value=${section.linkName}>${section.displayName}</option>`);
+  });
 }
 
 /*****************************************/
@@ -33,45 +83,44 @@ function sectionParams(section) {
 /***** create news url *****/
 function createNewsWireUrl() {
   const params = {
-    ['api-key']: API_KEY
+    ["api-key"]: API_KEY,
   };
   //format key
   const apiKey = formatParams(params);
   //get value from option select on form
-  const userSelect = $('select option:selected').text();
-  const formatSelect = sectionParams(userSelect)
-  //create url 
+  // change: Grab val() instead of text()
+  const userSelect = $("select option:selected").val();
+  const formatSelect = sectionParams(userSelect);
+
+  //create url
   const url = `${newsWireURL}${formatSelect}.json?${apiKey}`;
-  
   return fetchNewsWireData(url);
 }
 
 /***** fetch real-time sections *****/
+
 function fetchNewsWireData(url) {
-    fetch(url)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.statusText);
-    })
-    .then(getJson => displayNewsWireDOM(getJson))
-    .catch(err => {
-      $('#js-error-message').text('oops something went wrong...', err)
+  fetch(url)
+    .then((result) => result.json())
+    .then((jsonData) => displayNewsWireDOM(jsonData))
+    .catch((err) => {
+      $("#js-error-message").text("oops something went wrong...", err);
     });
-  }
+}
 
 /***** display data on DOM *****/
 
 function displayNewsWireDOM(getJson) {
   //removes previous results
-  $('#js-real-time-results').empty();
+  $("#js-real-time-results").empty();
   let data = getJson.results;
-  data.map(article => {
-      if (article.abstract.length >= 1 
-        && article.byline.length >= 3 
-        && article.des_facet.length >= 2) {
-          $('main').find('#js-real-time-results').append(`
+  data.map((article) => {
+    if (
+      article.abstract.length >= 1 &&
+      article.byline.length >= 3 &&
+      article.des_facet.length >= 2
+    ) {
+      $("main").find("#js-real-time-results").append(`
             <article class="overview-card">
               <h3>
                 <a href="${article.url}" target="_blank">
@@ -85,7 +134,7 @@ function displayNewsWireDOM(getJson) {
               <hr>
               <div class="discoverAuthor">
                 <p>discover more articles ${article.byline.toLowerCase()}</p>
-                <button id="js-nameSearch" name="js-nameSearch" value="${article.byline}">
+                <button class="submit-btn" id="js-nameSearch" name="js-nameSearch" value="${article.byline}">
                 locate articles
                 </button>
               </div>
@@ -97,14 +146,14 @@ function displayNewsWireDOM(getJson) {
               </div>
             </article>
           `);
-        }
-  })
-  
+    }
+  });
+
   //displays section
-  $('#js-real-time').removeClass('hidden');
-  $('header').removeClass('active-header');
-  $('header').addClass('non-active-header');
-  $('#js-brand').addClass('brand-active');
+  $("#js-real-time").removeClass("hidden");
+  $("header").removeClass("active-header");
+  $("header").addClass("non-active-header");
+  $("#js-brand").addClass("brand-active");
 }
 
 /*****************************************/
@@ -114,37 +163,31 @@ function displayNewsWireDOM(getJson) {
 function createSearchArticlesUrl(query) {
   const params = {
     q: query,
-    ['api-key']: API_KEY
-  }
-
-  const searchParams = formatParams(params)
-  const url = `${searchURL}?${searchParams}`
+    ["api-key"]: API_KEY,
+  };
+  const searchParams = formatParams(params);
+  const url = `${searchURL}?${searchParams}`;
 
   return fetchSearchArticleData(url);
 }
 
-function fetchSearchArticleData(url) {
-console.log(url)
-  fetch(url)
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw new Error(response.statusText)
-  })
-  .then(getJson => displaySearchArticleDOM(getJson))
-  .catch(err => {
-    $('#js-error-message').text('opps something went wrong...', err)
-  })
-}
+function fetchSearchArticleData(url) { 
+    fetch(url)
+      .then((result) => result.json())
+      .then((jsonData) => displaySearchArticleDOM(jsonData))
+      .catch((err) => {
+        $("#js-error-message").text("oops something went wrong...", err);
+      });
+  }
+
 
 function displaySearchArticleDOM(getJson) {
   let data = getJson.response.docs;
-  $('#js-real-time-results').empty();
-  $('#js-real-time').addClass('hidden');
+  $("#js-real-time-results").empty();
+  $("#js-real-time").addClass("hidden");
 
-  data.map(article => {
-    $('main').find('#js-deep-search-results').append(`
+  data.map((article) => {
+    $("main").find("#js-deep-search-results").append(`
       <article class="overview-card">
         <h3>
           <a href="${article.web_url}" target="_blank">
@@ -157,9 +200,9 @@ function displaySearchArticleDOM(getJson) {
         </div>
       </article>
     `);
-  })
-  
-  $('#js-deep-search').removeClass('hidden');
+  });
+
+  $("#js-deep-search").removeClass("hidden");
 }
 
 /*****************************************/
@@ -167,23 +210,23 @@ function displaySearchArticleDOM(getJson) {
 /*****************************************/
 //handle for deep search
 function handleSearchArticlesBtn() {
-  $('#js-main').on('click', '#js-nameSearch', function() {
+  $("#js-main").on("click", "#js-nameSearch", function () {
     let authorSelect = $(this).val();
     createSearchArticlesUrl(authorSelect);
-  })
+  });
 }
 
 //handle for sections
 function handleSectionsSubBtn() {
-  $('header').on('submit', '#js-newsWire-form', event => {
-    event.preventDefault();
+  $("header").on("submit", "#js-newsWire-form", (e) => {
+    e.preventDefault();
     createNewsWireUrl();
   });
 }
 
 //handle clear search results
 function handleClearSearch() {
-  $('header').on('click', '#reload', function() {
+  $("header").on("click", "#reload", () => {
     window.location.reload();
   });
 }
@@ -193,9 +236,10 @@ function handleClearSearch() {
 /*****************************************/
 //CREATE FUNCTION THAT HOLDS ALL LOAD FUNCTIONS
 function initializeApp() {
-  handleSearchArticlesBtn()
-  handleSectionsSubBtn()
-  handleClearSearch()
+  handleSearchArticlesBtn();
+  handleSectionsSubBtn();
+  handleClearSearch();
+  populateMenu();
 }
 
-$(initializeApp)
+$(initializeApp);
