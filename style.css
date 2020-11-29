@@ -168,6 +168,12 @@ header {
   margin-top: .25rem;
 }
 
+#newsWireBtn,
+#reload,
+.submit-btn{
+  cursor: pointer;
+}
+
 /* DROP DOWN */
 .selectdiv {
   margin-top: 1rem;
