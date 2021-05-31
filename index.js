@@ -1,5 +1,5 @@
 'use strict';
-
+const config = require('./config.js)
 const API_KEY = config.API_KEY;
 
 /*****************************************/
