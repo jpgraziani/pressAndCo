@@ -162,6 +162,10 @@ function displaySearchArticleDOM(getJson) {
   $('#js-deep-search').removeClass('hidden');
 }
 
+function autoUpdateDateDOM() {
+  const date = document.querySelector()
+}
+
 /*****************************************/
 /* EVENT HANDLES */
 /*****************************************/
