@@ -163,7 +163,9 @@ function displaySearchArticleDOM(getJson) {
 }
 
 function autoUpdateDateDOM() {
-  const date = document.querySelector()
+  const date = document.querySelector('#footer');
+  date = new Date()
+  document.querySelector('.auto-update--date').innerHTML = date;
 }
 
 /*****************************************/
